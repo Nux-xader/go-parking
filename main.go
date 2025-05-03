@@ -22,6 +22,7 @@ func main() {
 
 	scanner := bufio.NewScanner(file)
 	var pl *ParkingLot
+
 	for scanner.Scan() {
 		line := scanner.Text()
 		words := strings.Fields(line)
@@ -38,22 +39,19 @@ func main() {
 		switch command {
 		case Add.command:
 			argVal := parseArgVal(Add, words)
-			if argVal == nil {
-				continue
+			if argVal != nil {
+				pl = NewParkingLot(argVal[0].(int))
 			}
-			pl = NewParkingLot(argVal[0].(int))
 		case Park.command:
 			argVal := parseArgVal(Park, words)
-			if argVal == nil {
-				continue
+			if argVal != nil {
+				pl.Park(argVal[0].(string))
 			}
-			pl.Park(argVal[0].(string))
 		case Leave.command:
 			argVal := parseArgVal(Leave, words)
-			if argVal == nil {
-				continue
+			if argVal != nil {
+				pl.Leave(argVal[0].(string), argVal[1].(int))
 			}
-			pl.Leave(argVal[0].(string), argVal[1].(int))
 		case Status.command:
 			pl.Status()
 		default:
